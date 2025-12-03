@@ -1,0 +1,65 @@
+Design Report: GrayCoder
+1. Introduction
+The GrayCoder is a digital design module that converts a 4‑bit binary input into its corresponding 4‑bit Gray code. Gray code is widely used in digital systems to minimize errors during transitions, as only one bit changes between successive values. This design updates the Gray code output synchronously on each clock edge.
+
+2. Design Specifications
+Language: SystemVerilog
+
+Inputs:
+
+clk → Clock signal.
+
+bin_in [3:0] → 4‑bit binary input.
+
+Outputs:
+
+gray_out [3:0] → 4‑bit Gray code output.
+
+3. Functional Description
+Reset Behavior:
+
+No explicit reset is included; output updates on every clock edge.
+
+Conversion Rule:
+
+Gray code is derived from binary as follows:
+
+gray_out[3] = bin_in[3] (MSB unchanged).
+
+gray_out[2] = bin_in[3] ^ bin_in[2].
+
+gray_out[1] = bin_in[2] ^ bin_in[1].
+
+gray_out[0] = bin_in[1] ^ bin_in[0].
+
+Operation:
+
+On each positive clock edge, the module computes the Gray code equivalent of the current binary input and updates the output.
+
+4. Design Features
+Synchronous Operation: Ensures deterministic updates aligned with the clock.
+
+Compact Logic: Uses simple XOR operations for conversion.
+
+Error Minimization: Gray code reduces transition errors in counters and encoders.
+
+Ease of Verification: Direct mapping between binary and Gray code makes testbench validation straightforward.
+
+5. Verification Strategy
+Testbench Features:
+
+Clock generation (10 ns period).
+
+Stimulus tasks to apply binary inputs and check expected Gray outputs.
+
+Self‑checking mechanism with pass/fail messages.
+
+VCD dump for waveform analysis.
+
+Critical Test Cases:
+
+All 16 binary inputs from 0000 to 1111 tested against expected Gray outputs.
+
+Edge cases such as 0000 (all zeros), 1111 (all ones), alternating patterns (0101, 1010).
+
+Repeated inputs to confirm stable outputs.
